@@ -12,6 +12,7 @@ import {
 
 
 import './app.scss'
+import OverviewPage from './components/OverviewPage/OverviewPage';
 import store from './store';
 
 
@@ -19,7 +20,9 @@ import store from './store';
 const App = () => {
   return (
     <>
-      Start
+    <Routes>
+      <Route path='*' element={<OverviewPage/>}/>
+    </Routes>
     </>
 
   )
