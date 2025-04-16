@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "plugins": [{ "name": "typescript-plugin-css-modules" }],
+      "incremental": true,
+      "target": "es5",
+      "module": "commonjs",
+      "lib": ["dom", "dom.iterable", "es6"],
+      "allowJs": true,
+      "jsx": "react",
+      "sourceMap": true,
+      "outDir": "./dist/",
+      "rootDir": ".",
+      "removeComments": true,
+      "strict": true,
+      "moduleResolution": "node",            
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true
+    },
+    "include": ["src/**/*.ts", "declarations.d.ts"],
+    "exclude": [
+      "./node_modules",
+      "./build",
+      "./dist"
+    ]
+  }
+  

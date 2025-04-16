@@ -1,0 +1,49 @@
+import React from 'react';
+import { FC } from 'react';
+import { useParams } from 'react-router-dom';
+import { useGetItemMetricQuery } from '../../API/metricsSlice';
+
+interface ISingleServerMetrics { }
+
+const SingleServerMetrics: FC<ISingleServerMetrics> = () => {
+
+    const { id } = useParams();
+
+    const { data } = useGetItemMetricQuery({ id })
+
+    console.log(data)
+    return (
+        <>
+            <div className='single-item'>
+                <h2 className='single-item--header'>{data?.server} Server Details</h2>
+                <div className='single-item--block'>
+                    <div className='single-item--block--metric'>
+                        <p className='single-item--block--metric--header'>Perfomance meetrics</p>
+                    </div>
+                    <div className='single-item--block--metric'>
+                        <p className='single-item--block--metric--header'>Resource usage</p></div>
+                </div>
+                <section className="system-resources">
+                    <h2 className="system-resources--header">System Resources</h2>
+                    <div className="system-resources--wrapper">
+                        <div className="system-resources--wrapper--resource-item">
+                            <span className="system-resources--wrapper--resource-item--label">CPU Usage</span>
+                            <span className="system-resources--wrapper--resource-item--value">55%</span>
+                        </div>
+                        <div className="system-resources--wrapper--resource-item">
+                            <span className="system-resources--wrapper--resource-item--label">Memory Usage</span>
+                            <span className="system-resources--wrapper--resource-item--value">83%</span>
+                        </div>
+                        <div className="system-resources--wrapper--resource-item">
+                            <span className="system-resources--wrapper--resource-item--label">Disk Usage</span>
+                            <span className="system-resources--wrapper--resource-item--value">71%</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </>
+    );
+};
+
+export default SingleServerMetrics;
