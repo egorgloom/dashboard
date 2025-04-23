@@ -9,7 +9,7 @@ import reducer from '../src/slice/filterSlice'
 const store = configureStore({
 reducer: {
       [metricsSlice.reducerPath]: metricsSlice.reducer,
-      filter: reducer,
+      period: reducer,
       
 },
 middleware: (getDefaultMiddleware) =>
@@ -20,7 +20,6 @@ export type AppDispatch = typeof store.dispatch
 
 // Типизация корневого состояния
 export type RootState = ReturnType<typeof store.getState>
-
 export default store;
 
 

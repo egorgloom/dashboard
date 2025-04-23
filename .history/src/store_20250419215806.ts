@@ -2,6 +2,7 @@ import { configureStore  } from '@reduxjs/toolkit'
 
 import { metricsSlice } from './API/metricsSlice'
 import reducer from '../src/slice/filterSlice'
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 
 
@@ -9,18 +10,15 @@ import reducer from '../src/slice/filterSlice'
 const store = configureStore({
 reducer: {
       [metricsSlice.reducerPath]: metricsSlice.reducer,
-      filter: reducer,
+      period: reducer,
       
 },
 middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(metricsSlice.middleware),
 })
 
-export type AppDispatch = typeof store.dispatch
-
-// Типизация корневого состояния
-export type RootState = ReturnType<typeof store.getState>
 
 export default store;
 
-
+export type TypeRootState = ReturnType<typeof store.getState>
+// export const useTypedSelector: TypedUseSelectorHook<TypeRootState> = useSelector

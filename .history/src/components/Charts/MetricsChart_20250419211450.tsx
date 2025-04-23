@@ -11,7 +11,6 @@ import {
     Legend,
     ResponsiveContainer,
 } from 'recharts';
-import { IMetrics } from '../../interfaces/interface';
 
 
 
@@ -27,7 +26,7 @@ interface IMetricsChart {
 
 const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1, title2 }) => {
 
-    const chartData = item?.location?.historicalData?.h1?.timestamp?.map((time: string, index: number) => ({
+    const chartData = item?.location?.historicalData?.timestamp?.map((time: string, index: number) => ({
         param1: time,
         param2: elem2?.[index],
         param3: elem3?.[index],
