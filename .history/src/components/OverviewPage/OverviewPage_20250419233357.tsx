@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { FC } from 'react';
 
 import { useGetMetricsQuery } from '../../API/metricsSlice';
@@ -12,11 +12,21 @@ interface IOverviewPage { }
 
 const OverviewPage: FC<IOverviewPage> = () => {
 
-    const {data, error, isLoading} = useGetMetricsQuery();
+    const {data} = useGetMetricsQuery();
 
-    const selectedPeriod  = useAppSelector((state) => state.filter.period);
+    const currentPeriod = useAppSelector((state) => state.filter.period);
 
 
+    
+
+    const filData = () => {
+        if (!data) return null;
+        let metric = data[0];
+        const locationData = metric?.location?.historicalData?.[currentPeriod];
+    }
+const [state, setState] = useState(filData)
+
+console.log(state)
     return (
         <>
             <div className='wrapper'>

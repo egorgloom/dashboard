@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { IMetrics } from '.././interfaces/interface';
+
 
 export const metricsSlice = createApi({
     reducerPath: 'metricsSlice',

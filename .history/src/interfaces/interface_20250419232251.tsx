@@ -69,34 +69,34 @@
 
 
 export interface IMetrics {
-  id?: string;
-  server?: string;
-  responseTime?: string;
-  rps?: string;
-  errors?: string;
-  activeUsers?: string;
-  cpu?: string;
-  memory?: string;
-  location?: {
-    lat?: string;
-    lng?: string;
-    country?: string;
-    historicalData?: {
-      h1?: {
+  id: string;
+  server: string;
+  responseTime: string;
+  rps: string;
+  errors: string;
+  activeUsers: string;
+  cpu: string;
+  memory: string;
+  location: {
+    lat: string;
+    lng: string;
+    country: string;
+    historicalData: {
+      h1: {
         timestamp: string[];
         responseTime: number[];
         rps: number[];
         cpu: number[];
         memory: number[];
       };
-      h6?: {
+      h6: {
         timestamp: string[];
         responseTime: number[];
         rps: number[];
         cpu: number[];
         memory: number[];
       };
-      h12?: {
+      h12: {
         timestamp: string[];
         responseTime: number[];
         rps: number[];

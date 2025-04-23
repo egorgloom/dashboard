@@ -16,7 +16,34 @@ const OverviewPage: FC<IOverviewPage> = () => {
 
     const selectedPeriod  = useAppSelector((state) => state.filter.period);
 
+    const filteredData = useMemo(() => {
+        if (!data || error || isLoading) return null;
+    
+        // Предполагается, что data — массив метрик
+        // Обрабатываем первый элемент (например, data[0])
+        const metric = data[0]; // или другой способ получения данных
+    
+        const locationData = metric?.location?.historicalData?.[selectedPeriod];
+    
+        if (!locationData) return null;
+    
+        const { timestamp, responseTime, rps, cpu, memory } = locationData;
+    
+        // Вернуть подготовленные данные для отображения
+        return {
+          timestamp,
+          responseTime,
+          rps,
+          cpu,
+          memory,
+        };
+      }, [data, error, isLoading, selectedPeriod]);
+    
+      if (isLoading) return <div>Загрузка...</div>;
+      if (error) return <div>Ошибка загрузки данных</div>;
+      if (!filteredData) return null;
 
+      console.log(filteredData)
     return (
         <>
             <div className='wrapper'>

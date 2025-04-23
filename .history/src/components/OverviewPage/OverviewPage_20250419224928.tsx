@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { FC } from 'react';
 
 import { useGetMetricsQuery } from '../../API/metricsSlice';
@@ -6,16 +6,15 @@ import { useGetMetricsQuery } from '../../API/metricsSlice';
 import { IMetrics } from '../../interfaces/interface';
 import ItemCard from '../ItemCard/ItemCard';
 
-import { useAppSelector } from '../../hooks/useTypedSelector';
+import { useAppSelector } from '../../hooks';
 
 interface IOverviewPage { }
 
 const OverviewPage: FC<IOverviewPage> = () => {
 
-    const {data, error, isLoading} = useGetMetricsQuery();
+    const {data} = useGetMetricsQuery();
 
-    const selectedPeriod  = useAppSelector((state) => state.filter.period);
-
+    const currentPeriod = useAppSelector((state : any) => state.filter.period)
 
     return (
         <>
@@ -41,7 +40,6 @@ const OverviewPage: FC<IOverviewPage> = () => {
                 </div>
                 <div className='all-cards'>
                 {data?.map((elem: IMetrics) => <ItemCard elem={elem} key={elem.id}/>)}
-
                 </div>
             </div>
         </>

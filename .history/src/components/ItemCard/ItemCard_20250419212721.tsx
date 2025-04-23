@@ -38,7 +38,7 @@ const ItemCard: FC<IItemCard> = ({ elem }) => {
           </div>
           <div className="item__location">
             <div className="item__data__info__name">Location</div>
-            <div className="item__data__info__value">{elem.location?.country}</div>
+            <div className="item__data__info__value">{elem.location?.location}</div>
           </div>
 
 

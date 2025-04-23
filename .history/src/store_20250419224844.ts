@@ -9,7 +9,7 @@ import reducer from '../src/slice/filterSlice'
 const store = configureStore({
 reducer: {
       [metricsSlice.reducerPath]: metricsSlice.reducer,
-      filter: reducer,
+      period: reducer,
       
 },
 middleware: (getDefaultMiddleware) =>

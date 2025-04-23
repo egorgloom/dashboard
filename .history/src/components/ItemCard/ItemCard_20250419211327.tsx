@@ -1,7 +1,6 @@
 import React from 'react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { IMetrics } from '../../interfaces/interface';
 
 
 interface IItemCard {
