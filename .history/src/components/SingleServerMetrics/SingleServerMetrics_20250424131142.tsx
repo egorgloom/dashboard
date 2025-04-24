@@ -5,8 +5,9 @@ import { useGetItemMetricQuery } from '../../API/metricsSlice';
 
 import MetricsChart from '../Charts/MetricsChart';
 
+interface ISingleServerMetrics { }
 
-const SingleServerMetrics: FC = () => {
+const SingleServerMetrics: FC<ISingleServerMetrics> = () => {
 
     const { id } = useParams<{ id: string }>();
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { FC } from 'react';
 
 import {
@@ -13,6 +14,8 @@ import {
 import { IMetrics } from '../../interfaces/interface';
 
 
+
+
 interface IMetricsChart {
     item: IMetrics,
     elem2?: number[],
@@ -24,11 +27,12 @@ interface IMetricsChart {
 
 const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1, title2 }) => {
 
-    const chartData = item?.historicalData?.h6?.timestamp?.map((time: string, index: number) => ({
+    const chartData = item?.historicalData?.h1?.timestamp?.map((time: string, index: number) => ({
         param1: time,
         param2: elem2?.[index],
         param3: elem3?.[index],
     })) || [];
+
 
     return (
         <>

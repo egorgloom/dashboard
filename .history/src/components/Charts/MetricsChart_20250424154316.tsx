@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { FC } from 'react';
 
 import {
@@ -11,6 +12,8 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import { IMetrics } from '../../interfaces/interface';
+
+
 
 
 interface IMetricsChart {
@@ -29,6 +32,8 @@ const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1
         param2: elem2?.[index],
         param3: elem3?.[index],
     })) || [];
+
+
 
     return (
         <>

@@ -12,9 +12,8 @@ import { useDispatch } from 'react-redux';
 import { changePeriod } from '../../slice/filterSlice';
 
 
-interface IOverviewPage { }
 
-const OverviewPage: FC<IOverviewPage> = () => {
+const OverviewPage: FC = () => {
 
     const { data, error, isLoading } = useGetMetricsQuery();
 
@@ -31,38 +30,30 @@ const OverviewPage: FC<IOverviewPage> = () => {
             const periodData = item.historicalData?.[selectedPeriod];
             if (periodData) {
                 return {
-                    ...item,
-                    historicalData: {
-                        [selectedPeriod]: {
-                            timestamp: periodData.timestamp,
-                            responseTime: periodData.responseTime,
-                            rps: periodData.rps,
-                            cpu: periodData.cpu,
-                            memory: periodData.memory,
-                        }
-                    }
+                    id: item.id,
+                    server: item.server,
+                    errors: item.errors,
+                    location: item.location,
+                    responseTime: periodData.responseTime,
+                    rps: periodData.rps?.join(', '),
+                    cpu: periodData.cpu?.join(', '),
+                    memory: periodData.memory?.join(', '),
                 };
             }
             return null;
-
         }, [selectedPeriod]);
 
-    const filteredData: IMetrics[] | undefined = React.useMemo(() => {
-        if (!data) return undefined;
-        return data
-            .map((item) => processData(item))
-            .filter((item): item is IMetrics => item !== null);
-    }, [data, processData]);
+    const filteredData = data?.map((item: IMetrics) => processData(item));
 
-    console.log('filteredData', filteredData)
+    console.log(filteredData)
 
-    if (isLoading) {
-        return <div>Загрузка...</div>;
-    }
 
-    if (error) {
+    if (isLoading)
+        return <div>Loading...</div>;
+
+    if (error)
         return <div>Ошибка при загрузке данных</div>;
-    }
+
     return (
         <>
             <div className='wrapper'>
@@ -73,13 +64,32 @@ const OverviewPage: FC<IOverviewPage> = () => {
                             <option value="h6">h6</option>
                             <option value="h12">h12</option>
                         </select>
+                        {/* <select value={selectedPeriod} onChange={handleChange}>
+                            <option value="1">{defaultValue}</option>
+                            <option value="2">web</option>
+                            <option value="3">db</option>
+                            <option value="4">cache</option>
+
+                        </select> */}
+                        {/* <SelectFilter 
+                        defaultValue='All Servers'
+                        value={servers}
+                        onChange={changeFilter}
+                        options={[
+                            { value: 'WEB', name: 'WEB' },
+                            { value: 'DB', name: 'DB' }
+                        ]}
+                        /> */}
                     </div>
                     <div>
                         <button className='btn'>Pause</button>
                     </div>
                 </div>
                 <div className='all-cards'>
-                    {filteredData?.map((elem: IMetrics) => <ItemCard elem={elem} key={elem.id} />)}
+                    {filteredData?.map((elem: IMetrics | null) => {
+                        if (!elem) return null;
+                        return <ItemCard elem={elem} key={elem.id} />;
+                    })}
                 </div>
             </div>
         </>

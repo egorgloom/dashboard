@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { IMetrics } from '../../interfaces/interface';
+import { IHistoricalData, IHistoricalMetrics, IMetrics } from '../../interfaces/interface';
+
 
 interface IItemCard {
   elem: IMetrics
@@ -14,38 +15,29 @@ const ItemCard: FC<IItemCard> = ({ elem }) => {
     const sum = arr.reduce((acc, val) => acc + val, 0);
     return sum / arr.length;
   }
+  
+ 
+  function getAverageMetrics(elem: any): { cpu: number; memory: number; responseTime: number; rps: number } {
 
-const getAverageMetrics = useMemo(()=> (
-  metric: IMetrics
-): { cpu: number; memory: number; responseTime: number; rps: number } => {
+    const timeFrameKey = Object.keys(elem.historicalData)[0];
 
-  const entries = Object.entries(metric?.historicalData || {});
-  const firstEntry = entries[0];
-
-  if (!firstEntry) {
-    return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
+    const historical = elem.historicalData[timeFrameKey];
+  
+    const avgCpu = calculateAverage(historical.cpu);
+    const avgMemory = calculateAverage(historical.memory);
+    const avgResponseTime = calculateAverage(historical.responseTime);
+    const avgRps = calculateAverage(historical.rps);
+  
+    return {
+      cpu: avgCpu,
+      memory: avgMemory,
+      responseTime: avgResponseTime,
+      rps: avgRps,
+    };
   }
-
-  const [timeFrameKey, historical] = firstEntry;
-
-  if (!historical) {
-    return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
-  }
-
-  const avgCpu = calculateAverage(historical.cpu);
-  const avgMemory = calculateAverage(historical.memory);
-  const avgResponseTime = calculateAverage(historical.responseTime);
-  const avgRps = calculateAverage(historical.rps);
-
-  return {
-    cpu: avgCpu,
-    memory: avgMemory,
-    responseTime: avgResponseTime,
-    rps: avgRps,
-  };
-}, [elem]);
-
+  
 const averages = getAverageMetrics(elem);
+console.log(averages.responseTime);
 
   return (
     <>
@@ -77,6 +69,8 @@ const averages = getAverageMetrics(elem);
             <div className="item__data__info__name">Location</div>
             <div className="item__data__info__value">{elem?.location?.country}</div>
           </div>
+
+
         </Link>
       </div>
     </>

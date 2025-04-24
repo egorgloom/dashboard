@@ -5,8 +5,9 @@ import { useGetItemMetricQuery } from '../../API/metricsSlice';
 
 import MetricsChart from '../Charts/MetricsChart';
 
+interface ISingleServerMetrics { }
 
-const SingleServerMetrics: FC = () => {
+const SingleServerMetrics: FC<ISingleServerMetrics> = () => {
 
     const { id } = useParams<{ id: string }>();
 
@@ -21,8 +22,8 @@ const SingleServerMetrics: FC = () => {
                         <p className='single-item__block-metric__header'>Perfomance meetrics</p>
                         <MetricsChart 
                         item={data} 
-                        elem2={data?.historicalData?.h1?.responseTime}
-                        elem3={data?.historicalData?.h1?.rps}
+                        elem3={data?.historicalData?.h1?.responseTime}
+                        elem2={data?.historicalData?.h1?.rps}
                         title1={'Response Time'}
                         title2={'PRS'}
                         />
@@ -31,8 +32,8 @@ const SingleServerMetrics: FC = () => {
                         <p className='single-item__block-metric__header'>Resource usage</p>
                         <MetricsChart 
                         item={data} 
-                        elem2={data?.historicalData?.h1?.cpu}
-                        elem3={data?.historicalData?.h1?.memory}
+                        elem3={data?.historicalData?.h1?.cpu}
+                        elem2={data?.historicalData?.h1?.memory}
                         title1={'Memory'}
                         title2={'CPU'}
                         />
@@ -43,11 +44,11 @@ const SingleServerMetrics: FC = () => {
                     <div className="system-resources__wrapper">
                         <div className="system-resources__wrapper__resource-item">
                             <span className="system-resources__wrapper__resource-item__label">CPU Usage</span>
-                            <span className="system-resources__wrapper__resource-item__value">Меняй%</span>
+                            <span className="system-resources__wrapper__resource-item__value">{data?.cpu}%</span>
                         </div>
                         <div className="system-resources__wrapper__resource-item">
                             <span className="system-resources__wrapper__resource-item__label">Memory Usage</span>
-                            <span className="system-resources__wrapper__resource-item__value">Меняй%</span>
+                            <span className="system-resources__wrapper__resource-item__value">{data?.memory}%</span>
                         </div>
                         <div className="system-resources__wrapper__resource-item">
                             <span className="system-resources__wrapper__resource-item__label">Disk Usage</span>

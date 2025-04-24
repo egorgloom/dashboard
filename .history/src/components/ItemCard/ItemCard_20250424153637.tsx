@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { IMetrics } from '../../interfaces/interface';
+import { IHistoricalData, IHistoricalMetrics, IMetrics } from '../../interfaces/interface';
+
 
 interface IItemCard {
   elem: IMetrics
@@ -14,8 +15,10 @@ const ItemCard: FC<IItemCard> = ({ elem }) => {
     const sum = arr.reduce((acc, val) => acc + val, 0);
     return sum / arr.length;
   }
+  
+ 
 
-const getAverageMetrics = useMemo(()=> (
+const getAverageMetrics = (
   metric: IMetrics
 ): { cpu: number; memory: number; responseTime: number; rps: number } => {
 
@@ -43,10 +46,9 @@ const getAverageMetrics = useMemo(()=> (
     responseTime: avgResponseTime,
     rps: avgRps,
   };
-}, [elem]);
+};
 
 const averages = getAverageMetrics(elem);
-
   return (
     <>
       <div className='item'>
@@ -77,6 +79,8 @@ const averages = getAverageMetrics(elem);
             <div className="item__data__info__name">Location</div>
             <div className="item__data__info__value">{elem?.location?.country}</div>
           </div>
+
+
         </Link>
       </div>
     </>

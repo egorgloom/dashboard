@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { IMetrics } from '../../interfaces/interface';
+import { IHistoricalData, IHistoricalMetrics, IMetrics } from '../../interfaces/interface';
+
 
 interface IItemCard {
   elem: IMetrics
@@ -14,19 +15,78 @@ const ItemCard: FC<IItemCard> = ({ elem }) => {
     const sum = arr.reduce((acc, val) => acc + val, 0);
     return sum / arr.length;
   }
+  
+ 
+//   function getAverageMetrics(elem: IMetrics): { cpu: number; memory: number; responseTime: number; rps: number } {
 
-const getAverageMetrics = useMemo(()=> (
+//     const timeFrameKey = Object.keys(elem.historicalData)[0];
+
+//     const historical = elem.historicalData[timeFrameKey];
+  
+//     const avgCpu = calculateAverage(historical.cpu);
+//     const avgMemory = calculateAverage(historical.memory);
+//     const avgResponseTime = calculateAverage(historical.responseTime);
+//     const avgRps = calculateAverage(historical.rps);
+  
+//     return {
+//       cpu: avgCpu,
+//       memory: avgMemory,
+//       responseTime: avgResponseTime,
+//       rps: avgRps,
+//     };
+//   }
+  
+// const averages = getAverageMetrics(elem);
+
+// const getAverageMetrics = (
+//   metric: IMetrics
+// ): { cpu: number; memory: number; responseTime: number; rps: number } => {
+
+//   const timeFrameKeys = Object.keys(metric?.historicalData);
+  
+//   if (timeFrameKeys.length === 0) {
+
+//     return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
+//   }
+//   const timeFrameKey = timeFrameKeys[0];
+//   const historical = metric?.historicalData?.[timeFrameKey];
+
+//   if (!historical) {
+//     // Если historical undefined, возвращаем нули
+//     return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
+//   }
+
+//   const avgCpu = calculateAverage(historical.cpu);
+//   const avgMemory = calculateAverage(historical.memory);
+//   const avgResponseTime = calculateAverage(historical.responseTime);
+//   const avgRps = calculateAverage(historical.rps);
+
+//   return {
+//     cpu: avgCpu,
+//     memory: avgMemory,
+//     responseTime: avgResponseTime,
+//     rps: avgRps,
+//   };
+// };
+
+const getAverageMetrics = (
   metric: IMetrics
 ): { cpu: number; memory: number; responseTime: number; rps: number } => {
 
-  const entries = Object.entries(metric?.historicalData || {});
-  const firstEntry = entries[0];
+  let timeFrameKey: string | undefined;
 
-  if (!firstEntry) {
+  for (const key in metric?.historicalData) {
+    if (metric?.historicalData.hasOwnProperty(key)) {
+      timeFrameKey = key;
+      break; // берем только первый ключ
+    }
+  }
+
+  if (!timeFrameKey) {
     return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
   }
 
-  const [timeFrameKey, historical] = firstEntry;
+  const historical = metric?.historicalData?.[timeFrameKey];
 
   if (!historical) {
     return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
@@ -43,10 +103,9 @@ const getAverageMetrics = useMemo(()=> (
     responseTime: avgResponseTime,
     rps: avgRps,
   };
-}, [elem]);
+};
 
 const averages = getAverageMetrics(elem);
-
   return (
     <>
       <div className='item'>
@@ -77,6 +136,8 @@ const averages = getAverageMetrics(elem);
             <div className="item__data__info__name">Location</div>
             <div className="item__data__info__value">{elem?.location?.country}</div>
           </div>
+
+
         </Link>
       </div>
     </>

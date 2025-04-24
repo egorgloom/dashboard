@@ -73,6 +73,22 @@ const OverviewPage: FC<IOverviewPage> = () => {
                             <option value="h6">h6</option>
                             <option value="h12">h12</option>
                         </select>
+                        {/* <select value={selectedPeriod} onChange={handleChange}>
+                            <option value="1">{defaultValue}</option>
+                            <option value="2">web</option>
+                            <option value="3">db</option>
+                            <option value="4">cache</option>
+
+                        </select> */}
+                        {/* <SelectFilter 
+                        defaultValue='All Servers'
+                        value={servers}
+                        onChange={changeFilter}
+                        options={[
+                            { value: 'WEB', name: 'WEB' },
+                            { value: 'DB', name: 'DB' }
+                        ]}
+                        /> */}
                     </div>
                     <div>
                         <button className='btn'>Pause</button>
