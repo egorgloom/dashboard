@@ -17,7 +17,7 @@ interface IOverviewPage { }
 const OverviewPage: FC<IOverviewPage> = () => {
 
     const { data, error, isLoading } = useGetMetricsQuery();
-    const dispatch = useDispatch();
+const dispatch = useDispatch();
 
 
     const selectedPeriod = useAppSelector((state) => state.metrics.selectedPeriod);

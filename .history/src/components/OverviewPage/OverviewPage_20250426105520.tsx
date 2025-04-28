@@ -17,7 +17,7 @@ interface IOverviewPage { }
 const OverviewPage: FC<IOverviewPage> = () => {
 
     const { data, error, isLoading } = useGetMetricsQuery();
-    const dispatch = useDispatch();
+const dispatch = useDispatch();
 
 
     const selectedPeriod = useAppSelector((state) => state.metrics.selectedPeriod);
@@ -33,18 +33,47 @@ const OverviewPage: FC<IOverviewPage> = () => {
 
       useEffect(() => {
         dispatch(setSelectedPeriod(selectedPeriod));
-        dispatch(setServerFilter(serverFilter));// work
+        dispatch(setServerFilter(serverFilter));
         dispatch(processData());
+        console.log(setServerFilter(serverFilter))
       }, [selectedPeriod, serverFilter, dispatch]);
 
       const handleServerFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(setServerFilter(event.target.value as 'ALL' | 'WEB' | 'DB' | 'CACHE'));//work
+        dispatch(setServerFilter(event.target.value as 'ALL' | 'web' | 'db' | 'cache'));
       };
     
       const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(setSelectedPeriod(event.target.value as 'h1' | 'h6' | 'h12'));
       };
+    //     (item: IMetrics): IMetrics | null => {
+    //         const periodData = item.historicalData?.[selectedPeriod];
+    //         if (periodData) {
+    //             return {
+    //                 ...item,
+    //                 historicalData: {
+    //                     [selectedPeriod]: {
+    //                         timestamp: periodData.timestamp,
+    //                         responseTime: periodData.responseTime,
+    //                         rps: periodData.rps,
+    //                         cpu: periodData.cpu,
+    //                         memory: periodData.memory,
+    //                     }
+    //                 }
+    //             };
+    //         }
+    //         return null;
 
+    //     }, [selectedPeriod]);
+
+    // const filteredData: IMetrics[] | undefined = React.useMemo(() => {
+    //     if (!data) return undefined;
+    //     return data
+    //         .map((item) => processData(item))
+    //         .filter((item): item is IMetrics => item !== null);
+    // }, [data, processData]);
+
+
+    console.log('filteredData', filteredData)
 
     if (isLoading) {
         return <div>Загрузка...</div>;
@@ -65,9 +94,9 @@ const OverviewPage: FC<IOverviewPage> = () => {
                         </select>
                         <select value={serverFilter} onChange={handleServerFilterChange}>
                             <option value="ALL">All</option>
-                            <option value="WEB">web</option>
-                            <option value="DB">db</option>
-                            <option value="CACHE">cache</option>
+                            <option value="web">web</option>
+                            <option value="db">db</option>
+                            <option value="cache">cache</option>
                         </select>
                     </div>
                     <div>

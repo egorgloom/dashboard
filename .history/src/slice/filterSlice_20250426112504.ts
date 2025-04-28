@@ -1,3 +1,36 @@
+// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+// type Period = 'h1' | 'h6' | 'h12';
+
+// type Servers = 'ALL' | 'web' | 'db' | 'cache';
+
+// interface PeriodState {
+//   selectedPeriod: Period;
+//   server: Servers
+// }
+
+// const initialState: PeriodState = {
+//   selectedPeriod: 'h1',
+//   server: 'ALL'
+// };
+
+// const periodSlice = createSlice({
+//   name: 'period',
+//   initialState,
+//   reducers: {
+//     changePeriod(state, action: PayloadAction<Period>) {
+//       state.selectedPeriod = action.payload;
+//     },
+//     changeServer(state, action: PayloadAction<Servers> ) {
+//       state.server = action.payload
+//     }
+//   },
+// });
+
+// export const { changePeriod, changeServer } = periodSlice.actions;
+
+// export default periodSlice.reducer;
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IMetrics } from '../interfaces/interface';
 
@@ -37,6 +70,7 @@ const metricsSlice = createSlice({
         .map((item) : IMetrics | null => {
           const periodData = item.historicalData?.[state.selectedPeriod];
 
+
           if (periodData) {
             return {
               ...item,
@@ -58,6 +92,8 @@ const metricsSlice = createSlice({
         if (state.server !== 'ALL') {
           periodFilteredData = periodFilteredData.filter(item => item.server === state.server);
         }
+      
+        // Обновляем итоговые данные
         state.filteredData = periodFilteredData;
     },
 

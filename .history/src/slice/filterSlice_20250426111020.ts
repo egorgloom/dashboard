@@ -1,3 +1,36 @@
+// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+// type Period = 'h1' | 'h6' | 'h12';
+
+// type Servers = 'ALL' | 'web' | 'db' | 'cache';
+
+// interface PeriodState {
+//   selectedPeriod: Period;
+//   server: Servers
+// }
+
+// const initialState: PeriodState = {
+//   selectedPeriod: 'h1',
+//   server: 'ALL'
+// };
+
+// const periodSlice = createSlice({
+//   name: 'period',
+//   initialState,
+//   reducers: {
+//     changePeriod(state, action: PayloadAction<Period>) {
+//       state.selectedPeriod = action.payload;
+//     },
+//     changeServer(state, action: PayloadAction<Servers> ) {
+//       state.server = action.payload
+//     }
+//   },
+// });
+
+// export const { changePeriod, changeServer } = periodSlice.actions;
+
+// export default periodSlice.reducer;
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IMetrics } from '../interfaces/interface';
 
@@ -5,7 +38,7 @@ interface MetricsState {
   rawData: IMetrics[] | null;
   filteredData: IMetrics[] | null;
   selectedPeriod: 'h1' | 'h6' | 'h12';
-  server: 'ALL' | 'WEB' | 'DB' | 'CACHE';
+  server: 'ALL' | 'web' | 'db' | 'cache';
 }
 
 const initialState: MetricsState = {
@@ -25,7 +58,7 @@ const metricsSlice = createSlice({
     setSelectedPeriod(state, action: PayloadAction<'h1' | 'h6' | 'h12'>) {
       state.selectedPeriod = action.payload;
     },
-    setServerFilter(state, action: PayloadAction<'ALL' | 'WEB' | 'DB' | 'CACHE'>) {
+    setServerFilter(state, action: PayloadAction<'ALL' | 'web' | 'db' | 'cache'>) {
       state.server = action.payload;
     },
     processData(state) {
@@ -33,9 +66,10 @@ const metricsSlice = createSlice({
         state.filteredData = null;
         return;
       }
-      let periodFilteredData = state.rawData
-        .map((item) : IMetrics | null => {
+      state.filteredData = state.rawData
+        .map((item) : any => {
           const periodData = item.historicalData?.[state.selectedPeriod];
+
 
           if (periodData) {
             return {
@@ -54,11 +88,6 @@ const metricsSlice = createSlice({
           return null;
         })
         .filter((item): item is IMetrics => item !== null);
-
-        if (state.server !== 'ALL') {
-          periodFilteredData = periodFilteredData.filter(item => item.server === state.server);
-        }
-        state.filteredData = periodFilteredData;
     },
 
   },

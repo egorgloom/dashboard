@@ -17,6 +17,8 @@ middleware: (getDefaultMiddleware) =>
 })
 
 export type AppDispatch = typeof store.dispatch
+
+// Типизация корневого состояния
 export type RootState = ReturnType<typeof store.getState>
 
 export default store;
