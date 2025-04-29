@@ -23,10 +23,23 @@ const App = () => {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path='/' element={<OverviewPage />} />
+      {/* <Routes>
+        <Route path='/' element={<OverviewPage />} 
         <Route path='/metrics/:id' element={<SingleServerMetrics />} />
+        />
+        
+      </Routes> */}
+
+<Router>
+      <Routes>
+        {/* Основной маршрут с Layout */}
+        <Route path="/" element={<OverviewPage />}>
+          {/* Вложенные маршруты */}
+          <Route path='/metrics/:id' element={<SingleServerMetrics />} /> {/* по умолчанию "/''" */}
+
+        </Route>
       </Routes>
+    </Router>
     </>
 
   )

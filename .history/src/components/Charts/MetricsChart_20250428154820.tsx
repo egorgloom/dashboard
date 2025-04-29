@@ -24,7 +24,7 @@ interface IMetricsChart {
 
 const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1, title2 }) => {
 
-
+    const { refetch } = useGetMetricsQuery();
 
     const chartData = item?.historicalData?.h6?.timestamp?.map((time: string, index: number) => ({
         param1: time,
@@ -34,7 +34,10 @@ const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1
 
     return (
         <>
-
+        <div>
+        <h2>Server name</h2>
+        <AutoRefresher refetch={refetch} />
+            </div>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                     data={chartData}

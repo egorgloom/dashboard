@@ -26,7 +26,7 @@ const OverviewPage: FC = () => {
     const serverFilter = useAppSelector((state) => state.metrics.server);
     const filteredData = useAppSelector((state) => state.metrics.filteredData);
 
-    const { data, error, isLoading, refetch, isUninitialized } = useGetMetricsQuery();
+    const { data, error, isLoading, refetch } = useGetMetricsQuery();
 
 
 
@@ -40,7 +40,7 @@ const OverviewPage: FC = () => {
 
     useEffect(() => {
         dispatch(setSelectedPeriod(selectedPeriod));
-        dispatch(setServerFilter(serverFilter));
+        dispatch(setServerFilter(serverFilter));// work
         dispatch(processData());
     }, [selectedPeriod, serverFilter, dispatch]);
 
@@ -76,7 +76,7 @@ const OverviewPage: FC = () => {
                             />
                     </div>
                     <div>
-                        <AutoRefresher refetch={refetch} interval={3000} isUninitialized={isUninitialized}/>
+                        <AutoRefresher refetch={refetch} interval={3000} />
                     </div>
                 </div>
                 <div className='all-cards'>

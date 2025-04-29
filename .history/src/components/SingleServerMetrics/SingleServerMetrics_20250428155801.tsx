@@ -15,14 +15,16 @@ const SingleServerMetrics: FC = () => {
 
     const { data } = useGetItemMetricQuery(Number(id))
 
+    console.log('SingleServerMetrics', data)
+
     return !data ? (<div>Loading</div>) : (
         <>
             <div className='single-item'>
                 <h2 className='single-item__header'>{data?.server} Server Details</h2>
                 <div>
-                    <AutoRefresher refetch={refetch}
-                        isUninitialized={isUninitialized}
-                        isLoading={isLoading} />
+                    <AutoRefresher       refetch={refetch} 
+      isUninitialized={isUninitialized} 
+      isLoading={isLoading} />
                 </div>
                 <div className='single-item__block'>
                     <div className='single-item__block-metric'>

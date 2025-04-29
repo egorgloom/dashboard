@@ -15,6 +15,8 @@ const SingleServerMetrics: FC = () => {
 
     const { data } = useGetItemMetricQuery(Number(id))
 
+    console.log('SingleServerMetrics', data)
+
     return !data ? (<div>Loading</div>) : (
         <>
             <div className='single-item'>
