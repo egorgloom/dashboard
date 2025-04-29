@@ -63,7 +63,7 @@ const metricsSlice = createSlice({
         }
         state.filteredData = periodFilteredData;
     },
-    toggleRefetchMetrics(state) {
+    togglRefetchMetrics(state) {
       state.isFetching = !state.isFetching
     }
 

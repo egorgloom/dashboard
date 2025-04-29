@@ -24,7 +24,7 @@ const App = () => {
     <>
       <Header />
       <Routes>
-        <Route path='/' element={<OverviewPage />} />
+        <Route path='*' element={<OverviewPage />} />
         <Route path='/metrics/:id' element={<SingleServerMetrics />} />
       </Routes>
     </>

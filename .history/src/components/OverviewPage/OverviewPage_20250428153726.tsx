@@ -40,7 +40,7 @@ const OverviewPage: FC = () => {
 
     useEffect(() => {
         dispatch(setSelectedPeriod(selectedPeriod));
-        dispatch(setServerFilter(serverFilter));
+        dispatch(setServerFilter(serverFilter));// work
         dispatch(processData());
     }, [selectedPeriod, serverFilter, dispatch]);
 

@@ -11,40 +11,38 @@ const SingleServerMetrics: FC = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { refetch, isLoading, isUninitialized } = useGetMetricsQuery();
+    const { refetch } = useGetMetricsQuery();
 
     const { data } = useGetItemMetricQuery(Number(id))
 
-    return !data ? (<div>Loading</div>) : (
+    return !data ? (<div>Loading</div> ) : (
         <>
             <div className='single-item'>
                 <h2 className='single-item__header'>{data?.server} Server Details</h2>
                 <div>
-                    <AutoRefresher refetch={refetch}
-                        isUninitialized={isUninitialized}
-                        isLoading={isLoading} />
-                </div>
+        <AutoRefresher refetch={refetch} />
+            </div>
                 <div className='single-item__block'>
                     <div className='single-item__block-metric'>
                         <p className='single-item__block-metric__header'>Perfomance meetrics</p>
-                        <MetricsChart
-                            item={data}
-                            elem2={data?.historicalData?.h1?.responseTime}
-                            elem3={data?.historicalData?.h1?.rps}
-                            title1={'Response Time'}
-                            title2={'PRS'}
+                        <MetricsChart 
+                        item={data} 
+                        elem2={data?.historicalData?.h1?.responseTime}
+                        elem3={data?.historicalData?.h1?.rps}
+                        title1={'Response Time'}
+                        title2={'PRS'}
                         />
                     </div>
                     <div className='single-item__block-metric'>
                         <p className='single-item__block-metric__header'>Resource usage</p>
-                        <MetricsChart
-                            item={data}
-                            elem2={data?.historicalData?.h1?.cpu}
-                            elem3={data?.historicalData?.h1?.memory}
-                            title1={'Memory'}
-                            title2={'CPU'}
+                        <MetricsChart 
+                        item={data} 
+                        elem2={data?.historicalData?.h1?.cpu}
+                        elem3={data?.historicalData?.h1?.memory}
+                        title1={'Memory'}
+                        title2={'CPU'}
                         />
-                    </div>
+                        </div>
                 </div>
                 <section className="system-resources">
                     <h2 className="system-resources__header">System Resources</h2>

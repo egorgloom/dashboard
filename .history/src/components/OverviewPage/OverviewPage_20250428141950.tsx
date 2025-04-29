@@ -1,4 +1,4 @@
-import React, { FC, useEffect} from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 
 
 import { useGetMetricsQuery } from '../../API/metricsSlice';
@@ -26,7 +26,8 @@ const OverviewPage: FC = () => {
     const serverFilter = useAppSelector((state) => state.metrics.server);
     const filteredData = useAppSelector((state) => state.metrics.filteredData);
 
-    const { data, error, isLoading, refetch, isUninitialized } = useGetMetricsQuery();
+    const { data, error, isLoading, refetch } = useGetMetricsQuery(undefined,
+        { pollingInterval: 3000, refetchOnReconnect: true });
 
 
 
@@ -40,7 +41,7 @@ const OverviewPage: FC = () => {
 
     useEffect(() => {
         dispatch(setSelectedPeriod(selectedPeriod));
-        dispatch(setServerFilter(serverFilter));
+        dispatch(setServerFilter(serverFilter));// work
         dispatch(processData());
     }, [selectedPeriod, serverFilter, dispatch]);
 
@@ -52,7 +53,6 @@ const OverviewPage: FC = () => {
         dispatch(setSelectedPeriod(event.target.value as 'h1' | 'h6' | 'h12'));
     };
 
-    console.log('data', data)
     if (isLoading) {
         return <div>Загрузка...</div>;
     }
@@ -65,27 +65,29 @@ const OverviewPage: FC = () => {
             <div className='wrapper'>
                 <div className='wrapper__filters'>
                     <div className='wrapper__filter-select'>
-                        <SelectFilter 
-                            value={selectedPeriod}
-                            onChange={handleChange}
-                            option={['h1', 'h6', 'h12']} />
-                        <SelectFilter 
-                            value={serverFilter}
-                            onChange={handleServerFilterChange}
-                            option={['ALL', 'WEB', 'DB', 'CACHE']} 
-                            />
+                        <select value={selectedPeriod} onChange={handleChange}>
+                            <option value="h1">Last Hour</option>
+                            <option value="h6">h6</option>
+                            <option value="h12">h12</option>
+                        </select>
+                        <select value={serverFilter} onChange={handleServerFilterChange}>
+                            <option value="ALL">All</option>
+                            <option value="WEB">web</option>
+                            <option value="DB">db</option>
+                            <option value="CACHE">cache</option>
+                        </select>
+                        <SelectFilter     defaultValue={'ALL'}
+    value={serverFilter}
+    onChange={handleServerFilterChange}
+    data={data}
+    option={'server'}/>
                     </div>
                     <div>
-                        <AutoRefresher refetch={refetch} interval={3000} isUninitialized={isUninitialized}/>
+                        {/* <AutoRefresher refetch={refetch} interval={3000} /> */}
                     </div>
                 </div>
                 <div className='all-cards'>
-                    {filteredData?.map((elem: IMetrics) => 
-                    <ItemCard 
-                    elem={elem} 
-                    key={elem.id} 
-                    isLoading={isLoading} 
-                    error={error}/>)}
+                    {filteredData?.map((elem: IMetrics) => <ItemCard elem={elem} key={elem.id} />)}
                 </div>
             </div>
         </>

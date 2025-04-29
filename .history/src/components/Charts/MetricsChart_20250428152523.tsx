@@ -24,8 +24,6 @@ interface IMetricsChart {
 
 const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1, title2 }) => {
 
-
-
     const chartData = item?.historicalData?.h6?.timestamp?.map((time: string, index: number) => ({
         param1: time,
         param2: elem2?.[index],
@@ -34,7 +32,6 @@ const MetricsChart: FC<IMetricsChart> = React.memo(({ item, elem2, elem3, title1
 
     return (
         <>
-
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                     data={chartData}

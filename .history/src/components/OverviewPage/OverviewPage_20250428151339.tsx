@@ -26,7 +26,7 @@ const OverviewPage: FC = () => {
     const serverFilter = useAppSelector((state) => state.metrics.server);
     const filteredData = useAppSelector((state) => state.metrics.filteredData);
 
-    const { data, error, isLoading, refetch, isUninitialized } = useGetMetricsQuery();
+    const { data, error, isLoading, refetch } = useGetMetricsQuery();
 
 
 
@@ -40,7 +40,7 @@ const OverviewPage: FC = () => {
 
     useEffect(() => {
         dispatch(setSelectedPeriod(selectedPeriod));
-        dispatch(setServerFilter(serverFilter));
+        dispatch(setServerFilter(serverFilter));// work
         dispatch(processData());
     }, [selectedPeriod, serverFilter, dispatch]);
 
@@ -52,7 +52,6 @@ const OverviewPage: FC = () => {
         dispatch(setSelectedPeriod(event.target.value as 'h1' | 'h6' | 'h12'));
     };
 
-    console.log('data', data)
     if (isLoading) {
         return <div>Загрузка...</div>;
     }
@@ -76,16 +75,11 @@ const OverviewPage: FC = () => {
                             />
                     </div>
                     <div>
-                        <AutoRefresher refetch={refetch} interval={3000} isUninitialized={isUninitialized}/>
+                        <AutoRefresher refetch={refetch} interval={30000} />
                     </div>
                 </div>
                 <div className='all-cards'>
-                    {filteredData?.map((elem: IMetrics) => 
-                    <ItemCard 
-                    elem={elem} 
-                    key={elem.id} 
-                    isLoading={isLoading} 
-                    error={error}/>)}
+                    {filteredData?.map((elem: IMetrics) => <ItemCard elem={elem} key={elem.id} />)}
                 </div>
             </div>
         </>
