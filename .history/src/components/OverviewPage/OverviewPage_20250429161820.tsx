@@ -24,7 +24,7 @@ const OverviewPage: FC = () => {
     const serverFilter = useAppSelector((state) => state.metrics.server);
     const filteredData = useAppSelector((state) => state.metrics.filteredData);
 
-    const { data, error, isLoading, refetch, isUninitialized } = useGetMetricsQuery();
+    const { data, error, refetch, isUninitialized } = useGetMetricsQuery();
 
 
 
@@ -51,9 +51,7 @@ const OverviewPage: FC = () => {
       }, [setTimeRange]);
 
     console.log('data', data)
-    if (isLoading) {
-        return <div>Загрузка...</div>;
-    }
+
 
     if (error) {
         return (

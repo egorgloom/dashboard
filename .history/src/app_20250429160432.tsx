@@ -28,8 +28,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<OverviewPage />} />
-        <Route path='/metrics/:id'
-        element={
+        <Route path='/metrics/:id'         element={
           <Suspense fallback={<Loading />}>
             <ServerDetailsPage />
           </Suspense>

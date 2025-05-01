@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect} from 'react';
+import React, { FC, useEffect} from 'react';
 
 
 import { useGetMetricsQuery } from '../../API/metricsSlice';
@@ -8,16 +8,18 @@ import StatWidget from '../StatWidget/StatWidget';
 
 import { useAppSelector } from '../../hooks/useTypedSelector';
 
+import { useDispatch } from 'react-redux';
+import { processData, setRawData, setSelectedPeriod, setServerFilter } from '../../slice/filterSlice';
 import AutorefreshToggle from '../AutorefreshToggle/AutorefreshToggle';
 import SelectFilter from '../SelectFilter/SelectFilter';
-import { useActions } from './../../hooks/useActions';
 
 
 
 
 const OverviewPage: FC = () => {
 
-    const {processData, setRawData, setTimeRange, setServerTypeFilter} = useActions();
+
+    const dispatch = useDispatch();
 
 
     const selectedPeriod = useAppSelector((state) => state.metrics.selectedPeriod);
@@ -31,24 +33,24 @@ const OverviewPage: FC = () => {
 
     useEffect(() => {
         if (data) {
-            setRawData(data);
-            processData()
+            dispatch(setRawData(data));
+            dispatch(processData())
         }
-    }, [data, setRawData, processData ]);
+    }, [data, dispatch]);
 
     useEffect(() => {
-        setTimeRange(selectedPeriod);
-        setServerTypeFilter(serverFilter);
-        processData();
-    }, [selectedPeriod, serverFilter, setTimeRange, setServerTypeFilter, processData]);
+        dispatch(setSelectedPeriod(selectedPeriod));
+        dispatch(setServerFilter(serverFilter));
+        dispatch(processData());
+    }, [selectedPeriod, serverFilter, dispatch]);
 
-    const handleServerFilterChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-        setServerTypeFilter(event.target.value as 'ALL' | 'WEB' | 'DB' | 'CACHE');
-      }, [setServerTypeFilter]);
-    
-      const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-        setTimeRange(event.target.value as 'h1' | 'h6' | 'h12');
-      }, [setTimeRange]);
+    const handleServerFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setServerFilter(event.target.value as 'ALL' | 'WEB' | 'DB' | 'CACHE'));
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setSelectedPeriod(event.target.value as 'h1' | 'h6' | 'h12'));
+    };
 
     console.log('data', data)
     if (isLoading) {
@@ -56,12 +58,7 @@ const OverviewPage: FC = () => {
     }
 
     if (error) {
-        return (
-            <div >
-              <p>Произошла ошибка при загрузке данных.</p>
-              <button onClick={() => refetch()}>Повторить запрос</button>
-            </div>
-          );
+        return <div>Ошибка при загрузке данных</div>;
     }
     return (
         <>

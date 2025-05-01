@@ -14,13 +14,10 @@ import {
 import './app.scss'
 import OverviewPage from './components/OverviewPage/OverviewPage';
 import store from './store';
-
+import ServerDetailsPage from './components/ServerDetailsPage/ServerDetailsPage';
 import Header from './components/Header/Header';
 
 
-const ServerDetailsPage = React.lazy(() => import('./components/ServerDetailsPage/ServerDetailsPage'));
-import Loading from './UI/Loading';
-import { Suspense } from 'react';
 
 const App = () => {
   return (
@@ -28,12 +25,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<OverviewPage />} />
-        <Route path='/metrics/:id'
-        element={
-          <Suspense fallback={<Loading />}>
-            <ServerDetailsPage />
-          </Suspense>
-        } />
+        <Route path='/metrics/:id' element={<ServerDetailsPage />} />
       </Routes>
     </>
 

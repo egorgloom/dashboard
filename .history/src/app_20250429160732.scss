@@ -240,13 +240,20 @@ $pad30px: 30px;
   -webkit-box-shadow: -1px 0px 3px 3px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: -1px 0px 3px 3px rgba(34, 60, 80, 0.2);
   box-shadow: -1px 0px 3px 3px rgba(34, 60, 80, 0.2);
-}
 
-.system-resources__header {
+
+  &__header {
   font-size: $fs18;
   color: $black;
   font-weight: bold;
+  }
+
+
+
+
 }
+
+
 
 .system-resources__wrapper {
   @include flex--space-between;
@@ -287,14 +294,14 @@ $pad30px: 30px;
   .title {
       font-size: $fs18;
       font-family: 'Urbanist', sans-serif;
-      color: $lightBlack;
+      color: $dark-grey;
   
   }
   .myLoader {
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      border: 10px dotted $lightBlack;
+      border: 10px dotted $purple;
       animation: rotate 1s infinite linear;
   }
 }

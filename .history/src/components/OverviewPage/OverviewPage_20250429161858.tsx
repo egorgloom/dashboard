@@ -51,9 +51,7 @@ const OverviewPage: FC = () => {
       }, [setTimeRange]);
 
     console.log('data', data)
-    if (isLoading) {
-        return <div>Загрузка...</div>;
-    }
+
 
     if (error) {
         return (

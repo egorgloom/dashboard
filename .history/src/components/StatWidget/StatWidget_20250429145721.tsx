@@ -1,0 +1,91 @@
+import React, { useMemo } from 'react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { IMetrics } from '../../interfaces/interface';
+import { calculateAverage } from '../../../src/common'
+
+interface IStatWidget {
+  elem: IMetrics;
+  isLoading: boolean;
+  error: boolean | undefined;
+}
+
+const StatWidget: FC<IStatWidget> = ({ elem, isLoading, error }) => {
+
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+}
+
+if (error) {
+    return <div>Ошибка при загрузке данных</div>;
+}
+
+
+const averages = useMemo(() => {
+  if (!elem) {
+    return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
+  }
+
+  const entries = Object.entries(elem.historicalData || {});
+  const firstEntry = entries[0];
+
+  if (!firstEntry) {
+    return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
+  }
+
+  const [, historical] = firstEntry;
+
+  if (!historical) {
+    return { cpu: 0, memory: 0, responseTime: 0, rps: 0 };
+  }
+
+  const avgCpu = calculateAverage(historical.cpu);
+  const avgMemory = calculateAverage(historical.memory);
+  const avgResponseTime = calculateAverage(historical.responseTime);
+  const avgRps = calculateAverage(historical.rps);
+
+  return {
+    cpu: avgCpu,
+    memory: avgMemory,
+    responseTime: avgResponseTime,
+    rps: avgRps,
+  };
+}, [elem]);
+
+  return (
+    <>
+      <div className='item'>
+        <Link to={`/metrics/${elem.id}`}>
+          <div className="item__name">
+            <h2 className="item__name__header">{elem.server} Server</h2>
+            <span className="item__name__server">server-{elem.id}</span>
+          </div>
+          <div className="item__data">
+            <div className="item__data__info">
+              <span className="item__data__info__name">Response Time</span>
+              <span className="item__data__info__value">{averages.responseTime}ms</span>
+            </div>
+            <div className="item__data__info">
+              <span className="item__data__info__name">RPS</span>
+              <span className="item__data__info__value">{averages.rps}</span>
+            </div>
+            <div className="item__data__info">
+              <span className="item__data__info__name">CPU</span>
+              <span className="item__data__info__value">{averages.cpu}%</span>
+            </div>
+            <div className="item__data__info">
+              <span className="item__data__info__name">Memory</span>
+              <span className="item__data__info__value">{averages.memory}%</span>
+            </div>
+          </div>
+          <div className="item__location">
+            <div className="item__data__info__name">Location</div>
+            <div className="item__data__info__value">{elem?.location?.country}</div>
+          </div>
+        </Link>
+      </div>
+    </>
+  );
+};
+
+export default React.memo(StatWidget);

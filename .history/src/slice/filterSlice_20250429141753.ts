@@ -28,7 +28,7 @@ const metricsSlice = createSlice({
     setTimeRange(state, action: PayloadAction<'h1' | 'h6' | 'h12'>) {
       state.selectedPeriod = action.payload;
     },
-    setServerTypeFilter(state, action: PayloadAction<'ALL' | 'WEB' | 'DB' | 'CACHE'>) {
+    setServerFilter(state, action: PayloadAction<'ALL' | 'WEB' | 'DB' | 'CACHE'>) {
       state.server = action.payload;
     },
     processData(state) {
@@ -63,15 +63,13 @@ const metricsSlice = createSlice({
         }
         state.filteredData = periodFilteredData;
     },
-    toggleAutorefreshStatus(state) {
+    toggleRefetchMetrics(state) {
       state.isFetching = !state.isFetching
     }
 
   },
 });
 
-// export const { setRawData, setTimeRange, setServerTypeFilter, processData } = metricsSlice.actions;
+export const { setRawData, setTimeRange, setServerFilter, processData } = metricsSlice.actions;
 
-// export default metricsSlice.reducer;
-
-export const {actions, reducer} = metricsSlice
+export default metricsSlice.reducer;

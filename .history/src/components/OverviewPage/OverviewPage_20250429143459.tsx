@@ -8,6 +8,8 @@ import StatWidget from '../StatWidget/StatWidget';
 
 import { useAppSelector } from '../../hooks/useTypedSelector';
 
+
+// import { processData, setRawData, setTimeRange, setServerFilter } from '../../slice/filterSlice';
 import AutorefreshToggle from '../AutorefreshToggle/AutorefreshToggle';
 import SelectFilter from '../SelectFilter/SelectFilter';
 import { useActions } from './../../hooks/useActions';
@@ -17,7 +19,7 @@ import { useActions } from './../../hooks/useActions';
 
 const OverviewPage: FC = () => {
 
-    const {processData, setRawData, setTimeRange, setServerTypeFilter} = useActions();
+    const {processData, setRawData, setTimeRange, setServerFilter} = useActions();
 
 
     const selectedPeriod = useAppSelector((state) => state.metrics.selectedPeriod);
@@ -38,13 +40,13 @@ const OverviewPage: FC = () => {
 
     useEffect(() => {
         setTimeRange(selectedPeriod);
-        setServerTypeFilter(serverFilter);
+        setServerFilter(serverFilter);
         processData();
-    }, [selectedPeriod, serverFilter, setTimeRange, setServerTypeFilter, processData]);
+    }, [selectedPeriod, serverFilter, setTimeRange, setServerFilter, processData]);
 
     const handleServerFilterChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-        setServerTypeFilter(event.target.value as 'ALL' | 'WEB' | 'DB' | 'CACHE');
-      }, [setServerTypeFilter]);
+        setServerFilter(event.target.value as 'ALL' | 'WEB' | 'DB' | 'CACHE');
+      }, [setServerFilter]);
     
       const handleChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
         setTimeRange(event.target.value as 'h1' | 'h6' | 'h12');

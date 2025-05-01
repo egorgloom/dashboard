@@ -277,33 +277,3 @@ $pad30px: 30px;
   @include flex--center;
   font-weight: $fs24;
 }
-
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  row-gap: 20px;
-  .title {
-      font-size: $fs18;
-      font-family: 'Urbanist', sans-serif;
-      color: $lightBlack;
-  
-  }
-  .myLoader {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 10px dotted $lightBlack;
-      animation: rotate 1s infinite linear;
-  }
-}
-
-@keyframes rotate {
-  from {
-      transform: rotate(0deg) scale(1);
-  }
-  to {
-      transform: rotate(360deg) scale(1.4); 
-  }
-}

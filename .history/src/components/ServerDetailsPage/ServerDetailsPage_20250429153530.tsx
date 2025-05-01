@@ -2,16 +2,18 @@ import React from 'react';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetItemMetricQuery, useGetMetricsQuery } from '../../API/metricsSlice';
-import AutoRefresher from '../Button/AutoRefresher';
+import AutorefreshToggle from '../AutorefreshToggle/AutorefreshToggle';
+
 
 import MetricsChart from '../Charts/MetricsChart';
+import DiskUsageIndicator from '../DiskUsageIndicator/DiskUsageIndicator';
 
 
 const SingleServerMetrics: FC = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { refetch, isLoading, isUninitialized } = useGetMetricsQuery();
+    const { refetch, isLoading, isError, isUninitialized } = useGetMetricsQuery();
 
     const { data } = useGetItemMetricQuery(Number(id))
 
@@ -20,7 +22,7 @@ const SingleServerMetrics: FC = () => {
             <div className='single-item'>
                 <h2 className='single-item__header'>{data?.server} Server Details</h2>
                 <div>
-                    <AutoRefresher refetch={refetch}
+                    <AutorefreshToggle refetch={refetch}
                         isUninitialized={isUninitialized}
                         isLoading={isLoading} />
                 </div>
@@ -46,7 +48,7 @@ const SingleServerMetrics: FC = () => {
                         />
                     </div>
                 </div>
-                <section className="system-resources">
+                {/* <section className="system-resources">
                     <h2 className="system-resources__header">System Resources</h2>
                     <div className="system-resources__wrapper">
                         <div className="system-resources__wrapper__resource-item">
@@ -62,7 +64,11 @@ const SingleServerMetrics: FC = () => {
                             <span className="system-resources__wrapper__resource-item__value">71%</span>
                         </div>
                     </div>
-                </section>
+                </section> */}
+                <DiskUsageIndicator elem={data}
+                isLoading={isLoading} 
+                isError={isError}
+                />
 
             </div>
         </>
